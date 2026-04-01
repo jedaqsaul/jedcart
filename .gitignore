@@ -1,0 +1,71 @@
+# =========================
+# 🐍 Python / Flask
+# =========================
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pyc
+*.pkl
+
+.env
+.env.*
+instance/
+
+# Flask migrations (optional - usually tracked, but safe to ignore during dev resets)
+migrations/__pycache__/
+
+# =========================
+# 📦 Pipenv
+# =========================
+Pipfile.lock
+
+# Virtual environment (Pipenv auto-managed)
+.venv/
+venv/
+ENV/
+
+# =========================
+# 🗄️ Database
+# =========================
+*.sqlite3
+*.db
+
+# =========================
+# 🧪 Testing / Logs
+# =========================
+*.log
+pytest_cache/
+.coverage
+
+# =========================
+# ⚛️ React (Vite frontend)
+# =========================
+node_modules/
+dist/
+dist-ssr/
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite cache
+.vite/
+
+# =========================
+# 🖥️ OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# 🧑‍💻 IDEs
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# 🔐 Secrets (IMPORTANT)
+# =========================
+*.pem
+*.key
