@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_migrate import Migrate
 from flask_jwt_extended import JWTManager
 from flask_bcrypt import Bcrypt
@@ -21,8 +21,27 @@ def create_app():
     
     with app.app_context():
         from lib import models 
+
+
     migrate.init_app(app, db)
     jwt.init_app(app)
+
+    @jwt.unauthorized_loader
+    def unauthorized_callback(error):
+        return jsonify({"error": "Missing or invalid token. Please log in."}), 401
+
+    @jwt.expired_token_loader
+    def expired_token_callback(jwt_header, jwt_payload):
+        return jsonify({"error": "Token has expired. Please log in again."}), 401
+
+    @jwt.invalid_token_loader
+    def invalid_token_callback(error):
+        return jsonify({"error": "Token is invalid."}), 422
+
+    
+
+
+
     bcrypt.init_app(app)
     CORS(app)
 
@@ -51,3 +70,5 @@ app = create_app()
 
 if __name__ == "__main__":
     app.run(debug=True)
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc3NTA3MjczNSwianRpIjoiZmM2NTBkMGQtY2M3ZC00ZjM4LTg5NDYtNGM4NDgzNTc2OWExIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjQiLCJuYmYiOjE3NzUwNzI3MzUsImNzcmYiOiJjYTBiYzZlNy1iNTVhLTQ5MGUtODlkOC1hMDYxOTAwZWQyNjMiLCJleHAiOjE3NzU2Nzc1MzV9._HpeS4yWVSDBRP1VA9HcjN5JlXOK-FjfAUun2Fa6wUg
