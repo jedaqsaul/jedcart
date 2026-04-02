@@ -25,6 +25,17 @@ def create_app():
 
     migrate.init_app(app, db)
     jwt.init_app(app)
+    bcrypt.init_app(app)
+    CORS(app, resources={
+        r"/*": {
+            "origins": [
+                "http://localhost:5173",   
+                "http://127.0.0.1:5173",
+            ],
+            "methods": ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+            "allow_headers": ["Content-Type", "Authorization"],
+        }
+    })
 
     @jwt.unauthorized_loader
     def unauthorized_callback(error):
@@ -42,8 +53,7 @@ def create_app():
 
 
 
-    bcrypt.init_app(app)
-    CORS(app)
+    
 
     # Register route blueprints
     from routes.auth import auth_bp
